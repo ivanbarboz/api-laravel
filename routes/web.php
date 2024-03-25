@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\LoanController;
+use App\Http\Controllers\SpecimenController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Models\User;
@@ -35,7 +38,19 @@ Route::post('users/create', [UserController::class,'create']);
 Route::get('authors',[AuthorController::class, 'index']);
 Route::patch('authors/{id}', [AuthorController::class,'update']);
 
+// rutas para libros
+Route::get('books',[BookController::class, 'index']);
+Route::get('books/filter',[BookController::class, 'filter']);
 
+//rutas para prestamos
+Route::post('loans/create', [LoanController::class, 'create']);
+Route::patch('loans/update', [LoanController::class, 'update']);
+
+//rutas para ejemplares
+Route::patch('specimens/{id}', [SpecimenController::class, 'update']);
+Route::get('specimens', [SpecimenController::class, 'index']);
+Route::post('specimen', [SpecimenController::class, 'create']);
+Route::delete('specimens/{id}', [SpecimenController::class, 'delete']);
 /*
 Route::get('users',function(){
     return User::all();

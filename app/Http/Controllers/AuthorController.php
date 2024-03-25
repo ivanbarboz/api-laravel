@@ -16,7 +16,7 @@ class AuthorController extends Controller
     public function update($id, Request $request ){
         $author = Author::find($id);
         $author->update($request->all());
-        return response()->json(['messge'=>'actualizacion exitosa']);
+        return response()->json(['message'=>'actualizacion exitosa']);
 
     }
     
