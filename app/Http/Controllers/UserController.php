@@ -9,11 +9,9 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
         //mostrar todos los datos de users
-        public function index()
-    {
+        public function index(){
         $users = User::get();
         return response()->json($users);
-        
     }
     //actualiza las columnas users
     public function update($id, Request $request){

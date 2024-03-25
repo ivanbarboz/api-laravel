@@ -33,7 +33,7 @@ Route::post('users/create', [UserController::class,'create']);
 
 //rutas para mostrar los autores
 Route::get('authors',[AuthorController::class, 'index']);
-Route::patch('authors/{id}', [UserController::class,'update']);
+Route::patch('authors/{id}', [AuthorController::class,'update']);
 
 
 /*
