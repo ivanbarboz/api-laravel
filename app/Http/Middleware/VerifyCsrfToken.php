@@ -16,6 +16,8 @@ class VerifyCsrfToken extends Middleware
         'authors','authors/*',
         'specimens','specimens/*',
         'loans', 'loans/*',
-        'books', 'books/*'
+        'books', 'books/*',
+        'status', 'status/*',
+        'genders', 'genders/*'
     ];
 }

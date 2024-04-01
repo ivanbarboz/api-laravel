@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\GenderController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\SpecimenController;
 use Illuminate\Support\Facades\Route;
@@ -26,13 +27,14 @@ Route::get('/', function () {
     
     
 });*/
-
-
+Route::controller(UserController::class)->group(function(){
+    Route::get('/users', 'index')->name('mostrar');
+    Route::delete('/users/{id}','delete')->name('delete.users');
+    Route::patch('/users/{id}', 'update')->name('update');
+    Route::post('/users/create', 'create')->name('create');
+});
 // Ruta para mostrar todos los usuarios
-Route::get('/users', [UserController::class, 'index']);
-Route::delete('users/{id}', [UserController::class,'delete']);
-Route::patch('users/{id}', [UserController::class,'update']);
-Route::post('users/create', [UserController::class,'create']);
+
 
 //rutas para mostrar los autores
 Route::get('authors',[AuthorController::class, 'index']);
@@ -51,6 +53,10 @@ Route::patch('specimens/{id}', [SpecimenController::class, 'update']);
 Route::get('specimens', [SpecimenController::class, 'index']);
 Route::post('specimen', [SpecimenController::class, 'create']);
 Route::delete('specimens/{id}', [SpecimenController::class, 'delete']);
+
+
+Route::get('genders', [GenderController::class, 'index']);
+
 /*
 Route::get('users',function(){
     return User::all();

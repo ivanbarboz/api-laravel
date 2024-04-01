@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Book;
+use App\Models\Gender;
 use Illuminate\Support\Facades\DB;
 
 
@@ -11,25 +12,39 @@ class BookController extends Controller
 {
     
     public function index(){
-        $books = Book::select('b.id', 'b.title', DB::raw("CONCAT(a.name, ' ', a.last_name) as author_fullname"),'g.name as gender_name')
-                    ->from('books as b')
-                    ->join('genders as g', 'b.gender_id', '=', 'g.id')
-                    ->join('authors as a', 'b.author_id', '=', 'a.id')
-                    ->get();
-        
+        $books = Book::get();
+        $books->transform(function ($book) {
+            return [
+                'id' => $book->id,
+                'title' => $book->title,
+                'gender_name' => $book->gender->name ,
+                'auhor'=> $book->author->name 
+            ];
+        });
         return response()->json($books);
     }
 
-    public function filter(Request $request) {
-        $gender = $request->input('gender');
-    
-        $books = Book::whereHas('gender', function ($query) use ($gender) {
-                $query->where('name', $gender);
-            })
-            ->get();
-    
+
+// filtrar por genero
+    public function filter(Request $request){
+    $genderName = $request->input('gender_name','');
+    $gender = Gender::where('name', $genderName)->first();
+    if ($gender) {
+        $books = Book::with('gender', 'author')->where('gender_id', $gender->id)->get();
+        $books->transform(function ($book) {
+            return [
+                'id' => $book->id,
+                'title' => $book->title,
+                'gender_name' => $book->gender->name,
+                'author' => $book->author->name 
+            ];
+        });
         return response()->json($books);
+    } else {
+        return response()->json(['error' => 'El género no existe'], 404);
     }
-    
+}
+
+    //http://127.0.0.1:8000/books/filter?gender_name=Ficción
     
 }
