@@ -19,9 +19,10 @@ class LibrarianFactory extends Factory
         return [
             //
             'name' => fake()->name(),
-            'last_name' => fake()->lasName(),
+            'last_name' => fake()->lastName(),
             'email' => fake()->email(),
-            'cell_phone' => $this->faker->unique()->cell_phonel(),
+            'cell_phone' => $this->faker->unique()->phoneNumber(),
+            'address'=>fake()->address(),
         ];
     }
 }

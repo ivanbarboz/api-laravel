@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('author_id')->constrained('authors');
             $table->foreignId('gender_id')->constrained('genders');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

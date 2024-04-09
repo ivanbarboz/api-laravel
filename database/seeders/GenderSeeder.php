@@ -14,6 +14,6 @@ class GenderSeeder extends Seeder
     public function run(): void
     {
         //
-        Gender::factory() ->create();
+        Gender::factory(10)->create();
     }
 }

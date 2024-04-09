@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\LoanCollection;
+use App\Http\Resources\LoanResource;
 use App\Models\Loan;
 use App\Models\Specimen;
 use App\Models\Statu;
@@ -10,12 +12,6 @@ use Termwind\Components\Span;
 
 class LoanController extends Controller
 {
-    //
-    public function index(){
-        $loan = Loan::get();
-        return response()->json($loan);
-    }
-    
     public function create(Request $request) {
         $specimen_id = $request->input('specimen_id');
         $specimen = Specimen::find($specimen_id);
@@ -40,5 +36,11 @@ class LoanController extends Controller
         $loan = Loan::find($id);
         $loan->update($request->all());
         return response()->json(['message', 'prestamos actualizado']);
+    }
+
+    public function index()
+    {
+        $loans = Loan::get();
+        return LoanResource::collection($loans);
     }
 }

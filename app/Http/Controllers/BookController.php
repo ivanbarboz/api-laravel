@@ -1,8 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Http\Resources\BookResource;
 use App\Models\Book;
 use App\Models\Gender;
+use App\Services\BookService;
 use Illuminate\Support\Facades\DB;
 
 
@@ -10,10 +13,34 @@ use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    
-    public function index(){
+   public function __construct(private BookService $bookService)
+   {
+    $this->bookService = $bookService;
+   }
+
+   public function index(){
+    $books = $this->bookService->index();
+    return BookResource::collection($books);
+   }
+
+   public function create( Request $request){
+    $books = $this->bookService->create($request->all());
+    return response()->json($books);
+}
+
+public function delete (Book $id){
+    $books = $this->bookService->delete($id);
+    return response()->json(['mesage'=> $books ]);
+}
+
+public function update(Request $request, $id){
+    $books = $this->bookService->update($id, $request);
+    return response()->json($books);
+}
+
+    /*public function index(){
         $books = Book::get();
-        $books->transform(function ($book) {
+    $books->transform(function ($book) {
             return [
                 'id' => $book->id,
                 'title' => $book->title,
@@ -21,8 +48,8 @@ class BookController extends Controller
                 'auhor'=> $book->author->name 
             ];
         });
-        return response()->json($books);
-    }
+        return BookResource::collection($books);
+    }*/
 
 
 // filtrar por genero

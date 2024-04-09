@@ -25,24 +25,24 @@ use App\Models\User;
 Route::get('/', function () {
     return view('welcome');
     
-    
-});*/
+ 
+});
 Route::controller(UserController::class)->group(function(){
     Route::get('/users', 'index')->name('mostrar');
     Route::delete('/users/{id}','delete')->name('delete.users');
     Route::patch('/users/{id}', 'update')->name('update');
-    Route::post('/users/create', 'create')->name('create');
+    
 });
-// Ruta para mostrar todos los usuarios
-
+// Ruta para gedners
+Route::post('genders/create',[GenderController::class, 'create']);
 
 //rutas para mostrar los autores
 Route::get('authors',[AuthorController::class, 'index']);
 Route::patch('authors/{id}', [AuthorController::class,'update']);
 
 // rutas para libros
-Route::get('books',[BookController::class, 'index']);
-Route::get('books/filter',[BookController::class, 'filter']);
+//Route::get('books',[BookController::class, 'index']);
+//Route::get('books/filter',[BookController::class, 'filter']);
 
 //rutas para prestamos
 Route::post('loans/create', [LoanController::class, 'create']);

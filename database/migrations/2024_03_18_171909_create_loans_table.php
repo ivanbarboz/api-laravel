@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('specimen_id')->constrained('specimens');
             $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

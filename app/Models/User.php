@@ -4,17 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Model
+class User extends Authenticatable
 {
-    use HasFactory;
+    use HasApiTokens, HasFactory, Notifiable;
+    use SoftDeletes;
     protected $fillable = [
         "name",
-        "last_name",
         "email",
-        "password",
-        "cell_phone",
-        "addres"
+        "password"
+    ];
+    protected $casts = [
+        "password"=>"hashed"
     ];
     public function loan(){
         return $this->hasMany(Loan::class);
