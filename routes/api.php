@@ -79,6 +79,9 @@ Route::group([
     'middleware'=>'auth:sanctum'
 ], static function(){
     Route::get('librarians', [LibrarianController::class, 'index']);
+    Route::post('librarians',[LibrarianController::class,'store']);
+    Route::delete('librarians/{librarian}', [LibrarianController::class, 'destroy']);
+    Route::patch('librarians/{id}', [LibrarianController::class, 'restore']);
 });
 
 Route::group(['middleware'=>'guest'],

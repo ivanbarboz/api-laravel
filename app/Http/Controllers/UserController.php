@@ -39,6 +39,4 @@ class UserController extends Controller
         $user = $this->userService->create($request->all());
         return response()->json($user, 201); 
     }
-    
-    
 }
