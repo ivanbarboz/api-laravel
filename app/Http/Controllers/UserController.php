@@ -39,11 +39,7 @@ class UserController extends Controller
         $user = $this->userService->create($request->all());
         return response()->json($user, 201); 
     }
-    public function index(){
     
-        $users = User::all();
-        return new UserCollection($users);
-
-    }
+    
     
 }
