@@ -27,7 +27,7 @@ Route::group([
     'middleware' => 'auth:sanctum'
 ], static function (){
     Route::get('users', [UserController::class, 'index']);
-    Route::post('users', [UserController::class, 'create']);
+   // Route::post('users', [UserController::class, 'create']);
     Route::patch('users', [UserController::class, 'update']);
     Route::delete('users', [UserController::class, 'delete']);
 });
