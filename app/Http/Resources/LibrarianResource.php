@@ -20,6 +20,7 @@ class LibrarianResource extends JsonResource
             'last_name'=>$this->last_name,
             'email'=>$this->email,
             'cell_phone'=>$this->cell_phone,
+            'address'=>$this->address,
             'roles'=>$this->roles->map(function ($roles){
                 return [
                     'name_role'=>$roles->name

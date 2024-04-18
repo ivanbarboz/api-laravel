@@ -26,18 +26,19 @@ use Symfony\Component\HttpKernel\DependencyInjection\RegisterControllerArgumentL
 Route::group([
     'middleware' => 'auth:sanctum'
 ], static function (){
-    Route::get('users', [UserController::class, 'index']);
-   // Route::post('users', [UserController::class, 'create']);
+    Route::get('users', [UserController::class, 'index'])->name('user.index');
+    Route::post('users', [UserController::class, 'create']);
     Route::patch('users', [UserController::class, 'update']);
     Route::delete('users', [UserController::class, 'delete']);
 });
+Route::post('users', [UserController::class, 'create']);
 
 
 Route::group([
     'middleware'=>'auth:sanctum'
 ], static function(){
     Route::get('books', [BookController::class, 'index']);
-    Route::post('books', [BookController::class, 'create']);
+    Route::post('books', [BookController::class, 'create'])->name('book.create');
     Route::put('books/{id}', [BookController::class, 'update']);
     Route::delete('books/{id}', [BookController::class, 'delete']);
 });
@@ -53,14 +54,14 @@ Route::group([
 ], static function(){
     Route::get('loans', [LoanController::class, 'index']);
     Route::post('loans', [LoanController::class, 'create']);
-    Route::patch('loans', [LoanController::class, 'update']);
+    Route::patch('loans', [LoanController::class, 'update'])->name('loans.update');
     Route::delete('loans', [LoanController::class, 'delete']);
 });
 
 Route::group([
     'middleware'=>'auth:sanctum'
 ], static function(){
-    Route::get('authors', [AuthorController::class, 'index']);
+    Route::get('authors', [AuthorController::class, 'index'])->name('author.index');
     Route::post('authors', [AuthorController::class, 'create']);
     Route::patch('authors', [AuthorController::class, 'update']);
     Route::delete('authors', [AuthorController::class, 'delete']);
@@ -78,7 +79,7 @@ Route::group([
 Route::group([
     'middleware'=>'auth:sanctum'
 ], static function(){
-    Route::get('librarians', [LibrarianController::class, 'index']);
+    Route::get('librarians', [LibrarianController::class, 'index'])->name('librarian.index');
     Route::post('librarians',[LibrarianController::class,'store']);
     Route::delete('librarians/{librarian}', [LibrarianController::class, 'destroy']);
     Route::patch('librarians/{id}', [LibrarianController::class, 'restore']);

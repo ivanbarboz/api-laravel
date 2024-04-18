@@ -11,7 +11,8 @@ class UserController extends Controller
 {
     public function __construct(private UserService $userService)
     {
-        $this->userService = $userService;
+       // $this->userService = $userService;
+       
     }
         //mostrar todos los datos de users
     /*public function index(){
@@ -34,9 +35,13 @@ class UserController extends Controller
         return response()->json(['message' => $users]);
     }
     //crea un nuevo user
-    public function create(Request $request)
+    /*public function create(Request $request)
     {
         $user = $this->userService->create($request->all());
         return response()->json($user, 201); 
+    }*/
+    public function create(Request $request){
+        $user = User::create($request->all())->assignRole('Admin');
+        return response()->json($user);
     }
 }

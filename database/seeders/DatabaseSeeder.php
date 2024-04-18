@@ -17,11 +17,11 @@ class DatabaseSeeder extends Seeder
         GenderSeeder::class,
         AuthorSeeder::class,
         RoleSeeder::class,
+        PermissionSeeder::class,
         StatuSeeder::class,
         BookSeeder::class,
         SpecimenSeeder::class,
         LibrarianSeeder::class,
-        LibrarianRoleSeeder::class,
         LoanSeeder::class
         
     ]);

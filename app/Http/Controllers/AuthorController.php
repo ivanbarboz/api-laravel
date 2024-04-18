@@ -12,8 +12,13 @@ class AuthorController extends Controller
 public function __construct(private AuthorService $authorService)
 {
     $this->authorService = $authorService;
+    $this->middleware('can:author.index')->only('index');
 }
 
+    public function index(){
+        $author = Author::get();
+        return response()->json($author);
+    }
     public function create(Request $request){
         $authors = $this->authorService->create($request->all());
         return response()->json($authors, 201);

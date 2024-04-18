@@ -15,7 +15,7 @@ class LibrarianController extends Controller
 
 
     public function store(Request $request){
-       /* return Librarian::firstOrCreate(
+       /*return Librarian::firstOrCreate(
             ['name'=>$request->name],
         
             ['name'=>$request->name,
@@ -23,9 +23,9 @@ class LibrarianController extends Controller
             'email'=>$request->email,
             'cell_phone'=>$request->cell_phone,
             'address'=>$request->address]
-        );
+        );*/
 
-        return Librarian::updateOrCreate(
+       /* return Librarian::updateOrCreate(
             ['name'=>$request->name],
             
             ['name'=>$request->name,
@@ -33,11 +33,11 @@ class LibrarianController extends Controller
             'email'=>$request->email,
             'cell_phone'=>$request->cell_phone,
             'address'=>$request->address]
-        );
+        );*/
     
-        
+    
 
-        $librarian  = Librarian::firstOrNew(
+        /*$librarian  = Librarian::firstOrNew(
             ['name'=>$request->name],
             
             ['name'=>$request->name,
@@ -48,12 +48,12 @@ class LibrarianController extends Controller
         );
         $librarian->save();
         return response()->json($librarian);
-
-
-        $librarian = Librarian::whereName($request->name)->first();
-        if(!$librarian) return Librarian::create($request->all());
-        return response()->json($librarian);
 */
+
+      /*  $librarian = Librarian::whereName($request->name)->first();
+        if(!$librarian) return Librarian::create($request->all());
+        return response()->json($librarian);*/
+
     }
 
     public function destroy(Librarian $librarian){
