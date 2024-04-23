@@ -16,6 +16,10 @@ class BookController extends Controller
    public function __construct(private BookService $bookService)
    {
     $this->bookService = $bookService;
+    $this->middleware('can:index.book')->only('index');
+    $this->middleware('can:create.book')->only(['create']);
+    $this->middleware('can:update.book')->only(['update']);
+    $this->middleware('can:delete.book')->only(['delete']);
    }
 
    public function index(){

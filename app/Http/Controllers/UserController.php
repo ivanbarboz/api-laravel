@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\RoleEnum;
 use App\Http\Resources\UserCollection;
 use App\Models\User;
 use App\Services\UserService;
@@ -36,7 +37,7 @@ class UserController extends Controller
     //crea un nuevo user
     public function create(Request $request)
     {
-        $user = $this->userService->create($request->all());
+        $user = $this->userService->create($request->all())->assignRole(RoleEnum::LIBRARIAN->value);
         return response()->json($user, 201); 
     }
     

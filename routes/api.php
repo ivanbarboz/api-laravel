@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthenticatedController;
 use App\Http\Controllers\Auth\RegisteredController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\BookPhotoController;
 use App\Http\Controllers\LibrarianController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\SpecimenController;
@@ -33,13 +34,15 @@ Route::group([
 });
 
 
+Route::post('users', [UserController::class, 'create']);
+
 Route::group([
     'middleware'=>'auth:sanctum'
 ], static function(){
-    Route::get('books', [BookController::class, 'index']);
-    Route::post('books', [BookController::class, 'create']);
-    Route::put('books/{id}', [BookController::class, 'update']);
-    Route::delete('books/{id}', [BookController::class, 'delete']);
+    Route::get('books', [BookController::class, 'index'])->name('index.book');
+    Route::post('books', [BookController::class, 'create'])->name('create.book');
+    Route::put('books/{id}', [BookController::class, 'update'])->name('update.book');
+    Route::delete('books/{id}', [BookController::class, 'delete'])->name('delete.laon');
 });
 
 Route::group([
@@ -51,10 +54,10 @@ Route::group([
 Route::group([
     'middleware'=>'auth:sanctum'
 ], static function(){
-    Route::get('loans', [LoanController::class, 'index']);
-    Route::post('loans', [LoanController::class, 'create']);
-    Route::patch('loans', [LoanController::class, 'update']);
-    Route::delete('loans', [LoanController::class, 'delete']);
+    Route::get('loans', [LoanController::class, 'index'])->name('index.loan');
+    Route::post('loans', [LoanController::class, 'create'])->name('crate.loan');
+    Route::patch('loans', [LoanController::class, 'update'])->name('update.loan');
+    Route::delete('loans', [LoanController::class, 'delete'])->name('delete.loan');
 });
 
 Route::group([
@@ -89,3 +92,10 @@ static function (){
     Route::post('login',[AuthenticatedController::class, 'store'])->name('login');
 });
 
+Route::group([
+    'controller' => BookPhotoController::class,
+    'as' => 'posts.photo.',
+], static function () {
+    Route::post('posts/photo/file', 'storeFile')->name('file.store');
+    Route::post('posts/photo/base64', 'storeBase64')->name('base64.store');
+});

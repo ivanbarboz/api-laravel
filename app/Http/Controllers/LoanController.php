@@ -12,6 +12,15 @@ use Termwind\Components\Span;
 
 class LoanController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:index.loan')->only('index');
+        $this->middleware('can:create.loan')->only('create');
+        $this->middleware('can:update.loan')->only('update');
+        $this->middleware('can:delete.loan')->only('delete');
+        
+    }
     public function create(Request $request) {
         $specimen_id = $request->input('specimen_id');
         $specimen = Specimen::find($specimen_id);
