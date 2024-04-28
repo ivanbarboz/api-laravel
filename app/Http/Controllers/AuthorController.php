@@ -14,8 +14,8 @@ public function __construct(private AuthorService $authorService)
     $this->authorService = $authorService;
 }
 
-    public function create(Request $request){
-        $authors = $this->authorService->create($request->all());
+    public function store(Request $request){
+        $authors = $this->authorService->store($request->all());
         return response()->json($authors, 201);
     }
 

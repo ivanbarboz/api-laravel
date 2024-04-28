@@ -37,9 +37,10 @@ class UserController extends Controller
     //crea un nuevo user
     public function create(Request $request)
     {
-        $user = $this->userService->create($request->all())->assignRole(RoleEnum::LIBRARIAN->value);
+        $user = $this->userService->store($request->all())->assignRole(RoleEnum::LIBRARIAN->value);
         return response()->json($user, 201); 
     }
+    
     
     
     

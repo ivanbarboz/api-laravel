@@ -12,7 +12,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpKernel\DependencyInjection\RegisterControllerArgumentLocatorsPass;
-
+use App\Http\Controllers\AuthorPhotoController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -24,6 +24,16 @@ use Symfony\Component\HttpKernel\DependencyInjection\RegisterControllerArgumentL
 |
 */
 
+
+Route::group([
+    'middleware'=>'auth:sanctum'
+], static function(){
+    Route::apiResource('authors',AuthorController::class);
+    Route::apiResource('users', UserController::class);
+    
+});
+
+/*
 Route::group([
     'middleware' => 'auth:sanctum'
 ], static function (){
@@ -45,11 +55,6 @@ Route::group([
     Route::delete('books/{id}', [BookController::class, 'delete'])->name('delete.laon');
 });
 
-Route::group([
-    'middleware'=>'auth:sanctum'
-], static function(){
-    Route::post('authors', [AuthorController::class, 'create']);
-});
 
 Route::group([
     'middleware'=>'auth:sanctum'
@@ -60,14 +65,6 @@ Route::group([
     Route::delete('loans', [LoanController::class, 'delete'])->name('delete.loan');
 });
 
-Route::group([
-    'middleware'=>'auth:sanctum'
-], static function(){
-    Route::get('authors', [AuthorController::class, 'index']);
-    Route::post('authors', [AuthorController::class, 'create']);
-    Route::patch('authors', [AuthorController::class, 'update']);
-    Route::delete('authors', [AuthorController::class, 'delete']);
-});
 
 Route::group([
     'middleware'=>'auth:sanctum'
@@ -84,8 +81,9 @@ Route::group([
     Route::get('librarians', [LibrarianController::class, 'index']);
     Route::post('librarians',[LibrarianController::class,'store']);
     Route::delete('librarians/{librarian}', [LibrarianController::class, 'destroy']);
-    Route::patch('librarians/{id}', [LibrarianController::class, 'restore']);
-});
+    Route::patch('librarians/{id}', [LibrarianController::class, 'res
+    tore']);
+});*/
 
 Route::group(['middleware'=>'guest'],
 static function (){
@@ -94,8 +92,15 @@ static function (){
 
 Route::group([
     'controller' => BookPhotoController::class,
-    'as' => 'posts.photo.',
+    'as' => 'books.photo.',
 ], static function () {
-    Route::post('posts/photo/file', 'storeFile')->name('file.store');
-    Route::post('posts/photo/base64', 'storeBase64')->name('base64.store');
+    Route::post('book/photo/file', 'storeFile')->name('file.store');
+    Route::post('book/photo/base64', 'storeBase64')->name('base64.store');
+});
+
+Route::group([
+    'controller' => AuthorPhotoController::class,
+    'as' =>'authors.photo',
+], static function(){
+    Route::post('author/photo/file', 'storeFile')->name('author.file');
 });

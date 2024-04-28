@@ -11,7 +11,7 @@ class UserService
         return $user;
     }
 
-    public function create(array $userData){
+    public function store(array $userData){
         $user = User::create($userData);
         return $user;
     }

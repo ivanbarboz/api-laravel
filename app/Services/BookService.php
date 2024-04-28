@@ -10,7 +10,7 @@ class BookService{
         return ($books);
     }
 
-    public function create(array $bookData){
+    public function store(array $bookData){
         $books = Book::create($bookData);
         return ($books);
     }

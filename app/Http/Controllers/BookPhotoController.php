@@ -9,21 +9,23 @@ use Illuminate\Support\Str;
 
 class BookPhotoController extends Controller
 {
-    use Base64Decodable;
+    //use Base64Decodable;
 
     public function storeFile(Request $request)
     {
-        return BookPhoto::create([
-            'uri' => $request->file('photo')->store('posts', 'images'),
-            'post_id' => 1,
+         BookPhoto::create([
+            'uri' => $request->file('photo')->store('books', 'public'),
+            'book_id' => $request->book_id,
         ]);
+        return response()->json(['exito']);
+    
     }
 
-    public function storeBase64(Request $request)
-    {
-        return BookPhoto::create([
-            'uri' => $this->saveImage($request->photo, 'posts', Str::uuid()),
-            'post_id' => 1,
-        ]);
-    }
+     /*public function storeBase64(Request $request)
+     {
+         return BookPhoto::create([
+             'book_id' =>$request->book_id,
+         ]);
+         return response()->json(['exito']);
+     }*/
 }
