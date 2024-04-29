@@ -11,14 +11,14 @@ class BookPhotoController extends Controller
 {
     //use Base64Decodable;
 
+    //funcion para poder insertar imagen a nuestra base de datos
     public function storeFile(Request $request)
     {
-         BookPhoto::create([
+        BookPhoto::create([
             'uri' => $request->file('photo')->store('books', 'public'),
             'book_id' => $request->book_id,
         ]);
         return response()->json(['exito']);
-    
     }
 
      /*public function storeBase64(Request $request)

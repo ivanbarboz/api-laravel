@@ -10,15 +10,16 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    //creamos un constructor para usar nuestros servicios
     public function __construct(private UserService $userService)
     {
         $this->userService = $userService;
     }
         //mostrar todos los datos de users
-    /*public function index(){
+    public function index(){
         $users = $this->userService->index();
         return response()->json($users);
-    }*/
+    }
 
 
     

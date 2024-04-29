@@ -8,13 +8,17 @@ use Illuminate\Http\Request;
 
 class LibrarianController extends Controller
 {
-    public function index(){
-        $librarian = Librarian::with('roles')->get();
-        return LibrarianResource::collection($librarian);
-    }
+    //funcion para mostrar un bibliotecario
+    public function index()
+        {
+            $librarian = Librarian::with('roles')->get();
+            //me va aretornar una coleccion que esta dentro de resource
+            return LibrarianResource::collection($librarian);
+        }
 
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
        /* return Librarian::firstOrCreate(
             ['name'=>$request->name],
         
@@ -56,11 +60,17 @@ class LibrarianController extends Controller
 */
     }
 
-    public function destroy(Librarian $librarian){
+
+    //funcion para eliminar un bibliotecario
+    public function destroy(Librarian $librarian)
+    {
         return Librarian::destroy($librarian->id);
     }
 
-    public function restore(int $id){
+    //funcion para restaurar un bilbiotecario eliminado con softdelete
+
+    public function restore(int $id)
+    {
         return Librarian::onlyTrashed()->find($id)->restore();
     }
     

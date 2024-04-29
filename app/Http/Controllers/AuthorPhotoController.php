@@ -9,11 +9,14 @@ use Illuminate\Http\Request;
 
 class AuthorPhotoController extends Controller
 {
-    public function __construct(private UserService $userService)
+    //funcion para guardar una imagen en nuestra base de datos
+    public function storeFile(Request $request)
     {
-        $this->userService = $userService;
+         AuthorPhoto::create([
+            'uri' => $request->file('photo')->store('authors', 'public'),
+            'author_id' => $request->book_id,
+        ]);
+        return response()->json(['exito']);
     }
-
-    
 
 }
