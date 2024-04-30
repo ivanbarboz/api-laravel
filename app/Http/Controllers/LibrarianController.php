@@ -8,11 +8,18 @@ use Illuminate\Http\Request;
 
 class LibrarianController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:librarians.index')->only('index');
+        $this->middleware('can:librarians.store')->only('store');
+        $this->middleware('can:librarians.update')->only('update');
+        $this->middleware('can:librarians.delete')->only('delete');
+    }
     //funcion para mostrar un bibliotecario
     public function index()
         {
             $librarian = Librarian::with('roles')->get();
-            //me va aretornar una coleccion que esta dentro de resource
             return LibrarianResource::collection($librarian);
         }
 
@@ -27,7 +34,7 @@ class LibrarianController extends Controller
             'email'=>$request->email,
             'cell_phone'=>$request->cell_phone,
             'address'=>$request->address]
-        );
+        );*/
 
         return Librarian::updateOrCreate(
             ['name'=>$request->name],
@@ -40,7 +47,7 @@ class LibrarianController extends Controller
         );
     
         
-
+/*
         $librarian  = Librarian::firstOrNew(
             ['name'=>$request->name],
             

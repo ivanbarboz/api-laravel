@@ -7,6 +7,14 @@ use Illuminate\Http\Request;
 
 class SpecimenController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:specimens.index')->only(['index']);
+        $this->middleware('can:specimens.store')->only(['store']);
+        $this->middleware('can:specimens.update')->only(['update']);
+        $this->middleware('can:specimens.delete')->only(['delete']);
+    }
     //funcion para mostrar las especies o copias
     public function index()
     {
@@ -31,7 +39,7 @@ class SpecimenController extends Controller
     }
 
     //funcion para crear una copia
-    public function create(Request $request)
+    public function store(Request $request)
     {
         $specimen = Specimen::create($request->all());
         return response()->json(['messaje', 'specimen creada']);

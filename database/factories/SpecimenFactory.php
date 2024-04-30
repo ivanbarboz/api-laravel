@@ -17,7 +17,7 @@ class SpecimenFactory extends Factory
     public function definition(): array
     {
         return [
-            'statu_id'=>fake()->numberBetween(1,10),
+            'statu_id'=>fake()->numberBetween(1,2),
             'book_id'=>fake()->numberBetween(1,10),
         ];
     }

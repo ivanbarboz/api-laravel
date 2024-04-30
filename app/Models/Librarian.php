@@ -18,7 +18,5 @@ class Librarian extends Model
         "address"
         
     ];
-    public function roles(){
-        return $this->belongsToMany(Role::class, 'Librarian_roles');
-    }
+    
 }

@@ -13,12 +13,17 @@ class AuthorController extends Controller
 public function __construct(private AuthorService $authorService)
 {
     $this->authorService = $authorService;
+    $this->middleware('can:authors.index')->only('index');
+    $this->middleware('can:authors.store')->only(['store']);
+    $this->middleware('can:authors.update')->only(['update']);
+    $this->middleware('can:authors.delete')->only(['delete']);
 }
     // funcion para crear un nuevo author utilizando nuestro servicio
     public function store(Request $request)
     {
         $authors = $this->authorService->store($request->all());
-        return response()->json($authors, 201);
+        return response()->json(['message'=>'author creado con exito\n',
+                                'author'=>$authors]);
     }
 
     // funcion para actualizar los datos del author
@@ -26,7 +31,8 @@ public function __construct(private AuthorService $authorService)
     {
         $author = Author::find($id);
         $author->update($request->all());
-        return response()->json(['message'=>'actualizacion exitosa']);
+        return response()->json(['message'=>'actualizacion exitosa\n',
+                                'author'=>$author]);
     }
 
     //funcion para eliminar un author

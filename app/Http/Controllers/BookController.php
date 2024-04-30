@@ -18,10 +18,10 @@ class BookController extends Controller
    {
     //autenticamos nuestras rutas
     $this->bookService = $bookService;
-    $this->middleware('can:index.book')->only('index');
-    $this->middleware('can:create.book')->only(['create']);
-    $this->middleware('can:update.book')->only(['update']);
-    $this->middleware('can:delete.book')->only(['delete']);
+    $this->middleware('can:books.index')->only('index');
+    $this->middleware('can:books.store')->only(['store']);
+    $this->middleware('can:books.update')->only(['update']);
+    $this->middleware('can:books.delete')->only(['delete']);
    }
 
    // funcion para mostrar nuestros libros en formato json utilizando nuestro servicio
@@ -32,24 +32,43 @@ class BookController extends Controller
    }
 
    //funcion para crear un nuevo libro utilizando nuestro servicio
-   public function create( Request $request)
-   {
-    $books = $this->bookService->store($request->all());
-    return response()->json($books);
+
+   public function store(Request $request)
+    {
+        // Verificar si existe un libro eliminado con el mismo título
+        $deletedBook = Book::withTrashed()->where('title', $request->input('title'))->first();
+
+        if ($deletedBook) {
+            // Restaurar el libro eliminado con los datos actualizados
+            $deletedBook->fill($request->all());
+            $deletedBook->restore();
+            return response()->json(['message' => 'Libro restaurado con éxito']);
+        } else {
+            // Crear un nuevo libro
+            $book = Book::create($request->all());
+            return response()->json(['message'=>'libro creado con exito\n',
+                            'book'=>$book]);
+        }
     }
+   
 
     //funcion para eliminar un libro utilizamos nuestro servicio
     public function delete (Book $id)
     {
-    $books = $this->bookService->delete($id);
-    return response()->json(['mesage'=> $books ]);
+    $this->bookService->delete($id);
+    return response()->json(['mesage'=>'el libro se elimino correctamente']);
     }
 
-    //funcion para actualizar un libro utilizando nuestro servicio
-public function update(Request $request, $id)
+    //funcion para actualizar un libroio
+    public function update(Request $request, $id)
     {
-    $books = $this->bookService->update($id, $request);
-    return response()->json($books);
+        $book = Book::find($id);
+        if (!$book) {
+            return response()->json(['error' => 'libro no encontrado'], 404);
+        }
+        $book->delete();
+        $newBook = Book::create($request->all());
+        return response()->json(['message' => 'libro actualizado y eliminado con éxito', 'data' => $newBook]);
     }
 
     /*public function index(){
@@ -86,6 +105,15 @@ public function update(Request $request, $id)
             return response()->json(['error' => 'El género no existe'], 404);
         }
     }
+
+   /* public function bookdate(Request $request)
+    {
+        // Obtener la fecha de creación desde el parámetro de la URL
+        $fecha = $request->input('fecha');
+        // Obtener los libros creados desde la fecha especificada hasta hoy
+        $libros = Book::whereDate('created_at', '>=', $fecha)->get();
+        return response()->json($libros);
+    }*/
 
     
     

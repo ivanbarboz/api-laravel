@@ -36,9 +36,9 @@ class UserController extends Controller
         return response()->json(['message' => $users]);
     }
     //crea un nuevo user
-    public function create(Request $request)
+    public function store(Request $request)
     {
-        $user = $this->userService->store($request->all())->assignRole(RoleEnum::LIBRARIAN->value);
+        $user = $this->userService->store($request->all())->assignRole(RoleEnum::ADMIN->value);
         return response()->json($user, 201); 
     }
     
