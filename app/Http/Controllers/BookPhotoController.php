@@ -28,4 +28,11 @@ class BookPhotoController extends Controller
          ]);
          return response()->json(['exito']);
      }*/
+
+     public function delete($id)
+     {
+        $photo = BookPhoto::destroy($id);
+        return response()->json(['message'=>'photo eliminada']);
+
+     }
 }

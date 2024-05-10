@@ -60,6 +60,7 @@ Route::group([
     Route::post('books', [BookController::class,'store'])->name('books.store');
     Route::put('books/{id}', [BookController::class, 'update'])->name('books.update');
     Route::delete('books/{id}', [BookController::class, 'delete'])->name('books.delete');
+    Route::get('/books/filter/', [BookController::class, 'filter']);
     //Route::get('books',[BookController::class, 'bookdate']);
 });
 
@@ -103,7 +104,9 @@ Route::group([
     'as' => 'books.photo.',
 ], static function () {
     Route::post('book/photo/file', 'storeFile')->name('file.store');
+    Route::post('book/photo/delete', 'delete')->name('file.delete');
     Route::post('book/photo/base64', 'storeBase64')->name('base64.store');
+    
 });
 
 Route::group([

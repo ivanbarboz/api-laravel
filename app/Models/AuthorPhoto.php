@@ -15,7 +15,8 @@ class AuthorPhoto extends Model
     public function author(): BelongsTo
     {
         return $this->belongsTo(Author::class);
-
     }
+
+    
 
 }

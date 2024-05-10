@@ -27,6 +27,7 @@ class BookController extends Controller
    // funcion para mostrar nuestros libros en formato json utilizando nuestro servicio
    public function index()
    {
+    //return response()->json( Book::with('gender','author')->get());
     $books = $this->bookService->index();
     return BookResource::collection($books);
    }
